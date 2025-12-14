@@ -1,36 +1,27 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Model: {{ car.model }}</h1>
-  <p>Manufacturer: {{ car.manufacturer.name }}</p>
+  <h1>Username: {{ driver.username }}</h1>
+  <p><strong>First name:</strong> {{ driver.first_name }}</p>
+  <p><strong>Last name:</strong> {{ driver.last_name }}</p>
+  <p><strong>License number:</strong> {{ driver.license_number }}</p>
 
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <div class="btn-group">
-        <a href="{% url 'taxi:car-update' pk=car.id %}" class="btn btn-secondary">Update</a>
-        <a href="{% url 'taxi:car-delete' pk=car.id %}" class="btn btn-danger">Delete</a>
-    </div>
-
-    {% if user in car.drivers.all %}
-      <a href="{% url 'taxi:toggle-car-assign' pk=car.id %}" class="btn btn-danger">
-        Delete me from this car
+  <div class="btn-group mt-3">
+      <a href="{% url 'taxi:driver-update-license' pk=driver.id %}" class="btn btn-secondary">
+          Update License
       </a>
-    {% else %}
-      <a href="{% url 'taxi:toggle-car-assign' pk=car.id %}" class="btn btn-success">
-        Assign me to this car
+      <a href="{% url 'taxi:driver-delete' pk=driver.id %}" class="btn btn-danger">
+          Delete
       </a>
-    {% endif %}
   </div>
-
-  <h2>Drivers</h2>
+  
+  <h2 class="mt-4">Cars</h2>
   <ul>
-      {% for driver in car.drivers.all %}
-          <li>
-              <a href="{% url 'taxi:driver-detail' pk=driver.id %}">
-                {{ driver.username }} ({{ driver.first_name }} {{ driver.last_name }})
-              </a>
-          </li>
+      {% for car in driver.cars.all %}
+          <li><a href="{% url 'taxi:car-detail' pk=car.id %}">{{ car.model }}</a></li>
       {% empty %}
-          <p>No drivers assigned.</p>
+          <li>No cars assigned.</li>
       {% endfor %}
   </ul>
+
 {% endblock %}

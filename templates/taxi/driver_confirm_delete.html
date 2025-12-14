@@ -2,11 +2,12 @@
 
 {% block content %}
   <h1>Delete Driver?</h1>
-  <p>Are you sure you want to delete the driver: <strong>{{ user.username }}</strong>?</p>
+  <p>Are you sure you want to delete the driver: <strong>{{ object.username }}</strong>?</p>
   
   <form action="" method="post">
     {% csrf_token %}
     <input type="submit" value="Yes, delete" class="btn btn-danger">
-    <a href="{% url 'taxi:driver-list' %}" class="btn btn-secondary">Cancel</a>
+    {# FIX: Link back to the specific driver detail page #}
+    <a href="{% url 'taxi:driver-detail' pk=object.id %}" class="btn btn-secondary">Cancel</a>
   </form>
 {% endblock %}
